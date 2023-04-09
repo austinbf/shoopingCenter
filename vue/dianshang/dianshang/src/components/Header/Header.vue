@@ -35,7 +35,7 @@
           <div class="searchArea">
             <form action="###" class="searchForm">
               <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
-              <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
+              <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch()">搜索</button>
             </form>
           </div>
         </div>
@@ -57,13 +57,21 @@
       // 搜索按钮的回调函数： 需要向search路由跳转
       goSearch () {
         // this.$router.push('/search')
-  
+        //   if (this.$route.query) {
+        //       let location = {
+        //           name: "search",
+        //           params: { keyword: this.keyword || undefined },
+        //       };
+        //      location.query = this.$route.query;
+        //       this.$router.push(location);
+        //   }
+
         // 路由跳转传参（对象形式）：
-        this.$router.push({
-          name: 'search',
-          params: { keyword: this.keyword },
-          query: { k: this.keyword.toUpperCase() }
-        })
+        // this.$router.push({
+        //   name: 'search',
+        //   params: { keyword: this.keyword },
+        //   query: { k: this.keyword.toUpperCase() }
+        // })
   
         // 不传递params，只传递query
         /* this.$router.push({
@@ -72,11 +80,11 @@
         }) */
   
         // params传递为空
-        /* this.$router.push({
+         this.$router.push({
           name: 'search',
           params: { keyword: '' || undefined },
           query: { k: this.keyword.toUpperCase() }
-        }) */
+        })
       }
     },
   }
