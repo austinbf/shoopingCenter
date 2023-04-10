@@ -1,6 +1,5 @@
-# shangpinhui
+# shangpinhui（电商平台）
 a vue project（持续更新中）
-# dianshang
 
 ## Project setup
 ```
