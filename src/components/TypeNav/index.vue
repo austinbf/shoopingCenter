@@ -103,7 +103,10 @@ export default {
                 } else {
                     location.query.category3Id = category3id;
                 }
-                this.$router.push(location);
+                if(this.$route.params){
+                    location.params=this.$route.params;
+                    this.$router.push(location);
+                }
             }
 
         },

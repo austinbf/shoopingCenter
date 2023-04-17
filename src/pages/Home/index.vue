@@ -33,6 +33,7 @@ export default {
         Floor,
         Brand
     },
+
 }
 </script>
 

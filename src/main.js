@@ -7,7 +7,9 @@ import router from "@/router";
 import TypeNav from "@/components/TypeNav/index.vue";
 Vue.component(TypeNav.name,TypeNav);
 Vue.config.productionTip = false
-
+import '@/mock/mockServe';
+import Swiper from "swiper";
+import 'swiper/css/swiper.css'
 new Vue({
   render: h => h(App),
   //注册路由信息，当这里书写router的时候，
