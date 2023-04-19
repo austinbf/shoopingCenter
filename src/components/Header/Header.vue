@@ -55,14 +55,14 @@
         goSearch () {
             /*
      1.纯字符串的写法
-        this.$router.push("/search/"+this.keyword+"?k="+this.keyword.toUpperCase())}*/
+        this.$router.push("/Search/"+this.keyword+"?k="+this.keyword.toUpperCase())}*/
 
 
 
-            // this.$router.push('/search')
+            // this.$router.push('/Search')
             //   if (this.$route.query) {
             //       let location = {
-            //           name: "search",
+            //           name: "Search",
             //           params: { keyword: this.keyword || undefined },
             //       };
             //      location.query = this.$route.query;
@@ -78,13 +78,13 @@
 
             // 不传递params，只传递query
             /* this.$router.push({
-          name: 'search',
+          name: 'Search',
           query: { k: this.keyword.toUpperCase() }
         }) */
 
             // params传递为空
             //  this.$router.push({
-            //   name: 'search',
+            //   name: 'Search',
             //   params: { keyword: '' || undefined },
             //   query: { k: this.keyword.toUpperCase() }
             // })
