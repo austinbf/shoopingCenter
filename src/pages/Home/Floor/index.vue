@@ -72,6 +72,7 @@
 
 <script>
 import Swiper from "swiper";
+import {nextTick} from "vue";
 
 export default {
     name: "index",
@@ -80,29 +81,44 @@ export default {
         //因为有home模块中有两个floor组件，所以需要在home路由组件中发送actions请求
         //因为要v-for遍历组件
         //listContainer中是异步调用，而在这里是在父组件中全部得到数据之后再执行的，数据不再是异步了
-        //因为请求不是在这里发的，是在父组件home中发送的请求
-        var mySwiper = new Swiper((this.$refs.floor1Swiper), {
+        //因为请求不是在这里发的，是在父组件home中发送的请求,在这里面的数据从未发生变化
 
-            loop: true, // 循环模式选项
+    },
+    watch:{
+        list:{
+            immediate:true,
+            //无论有没有变化，都进行这个操作
+            async handler(newValue, oldValue) {
+//当前的函数执行，只能保证数据有了
+                await nextTick()
+                {
+                    var mySwiper = new Swiper((this.$refs.floor1Swiper), {
 
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+                        loop: true, // 循环模式选项
+
+                        // 如果需要分页器
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+
+                        // 如果需要前进后退按钮
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+
+                        // 如果需要滚动条
+                        scrollbar: {
+                            el: '.swiper-scrollbar',
+                        },
+                    })
+                }
+
             },
-
-            // 如果需要前进后退按钮
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-
-            // 如果需要滚动条
-            scrollbar: {
-                el: '.swiper-scrollbar',
-            },
-        })
+        }
     }
+
 }
 </script>
 

@@ -111,6 +111,7 @@ import {nextTick} from "vue";
 export default {
     name: "index",
     watch: {
+        immediate:true,
         //监听bannerList数据的变化
         bannerList: {
             async handler(newValue, oldValue) {
