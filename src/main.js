@@ -8,7 +8,6 @@ import TypeNav from "@/components/TypeNav/index.vue";
 Vue.component(TypeNav.name,TypeNav);
 Vue.config.productionTip = false
 import '@/mock/mockServe';
-import Swiper from "swiper";
 import 'swiper/css/swiper.css'
 new Vue({
   render: h => h(App),

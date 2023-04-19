@@ -11,3 +11,4 @@ export const reqCategoryList = () => {
     return requests({ method: 'get', url: '/product/getBaseCategoryList' });
 }
 export const reqBannerList=()=>mockRequests.get('/banner');
+export const reqFloorList=()=>mockRequests.get('/floor');

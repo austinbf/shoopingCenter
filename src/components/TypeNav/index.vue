@@ -2,9 +2,9 @@
     <div>
         <!-- 商品分类导航 -->
         <div class="type-nav">
-            <div class="container" @mouseenter="enterShow()" @mouseleave="leaveShow()">
+            <div class="container" @mouseleave="leaveShow()">
 
-                <h2 class="all ">全部商品分类</h2>
+                <h2 class="all "  @mouseenter="enterShow()">全部商品分类</h2>
                 <nav class="nav">
                     <a href="###">服装城</a>
                     <a href="###">美妆馆</a>
@@ -62,7 +62,7 @@ export default {
     //组件挂载完毕就可以向服务器发请求，获取服务器的数据
     //通知vuex获取数据
     mounted() {
-        // this.$store.dispatch('categoryList');
+        this.$store.dispatch('categoryList');
         //当组件挂载完毕，在search中将show改为false
         if (this.$route.path.includes('home')) {
             this.show = true;

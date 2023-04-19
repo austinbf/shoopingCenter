@@ -1,13 +1,19 @@
 <template>
     <div>
-                <TypeNav></TypeNav>
-                <ListContainer></ListContainer>
-                <Recommend></Recommend>
-                <Rank></Rank>
-                <Like></Like>
-                <Floor></Floor>
-                <Floor></Floor>
-                <Brand></Brand>
+        <TypeNav></TypeNav>
+        <ListContainer></ListContainer>
+        <Recommend></Recommend>
+        <Rank></Rank>
+        <Like></Like>
+        <!--v-for也可以在自定义的标签中使用
+        props:用于父子组件通信
+        自定义的时间：@on @emit 可以实现子给父通信
+        全局时间总线：$bus 全能
+        pubsub:vue中几乎不用 全能
+        插槽
+        vuex-->
+        <Floor v-for="(floor,index) in floorList " :key=floor.id :list="floor"></Floor>
+        <Brand></Brand>
 
     </div>
 
@@ -33,7 +39,15 @@ export default {
         Floor,
         Brand
     },
-
+    mounted() {
+        this.$store.dispatch('getFloorList');
+    },
+    computed: {
+        ...mapState({
+                floorList:state =>state.home.floorList
+            }
+        )
+    }
 }
 </script>
 

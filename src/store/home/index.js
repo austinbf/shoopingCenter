@@ -1,10 +1,10 @@
-import {reqBannerList, reqCategoryList} from "@/api";
+import {reqBannerList, reqCategoryList, reqFloorList} from "@/api";
 
 const state = {
     categoryList: [],
     //state中的数据依靠vuex中返回的对象的类型而定，根据接口返回的值进行更改
-    bannerList: []
-
+    bannerList: [],
+    floorList: []
 }
 const actions = {
     // <-------------note------------------->
@@ -26,16 +26,22 @@ const actions = {
     },
     //获取首页轮播图的数据
     async getBannerList({commit}) {
-        console.log('在获取服务器的数据')
         let result = await reqBannerList();
 
         if (result.code === 200) {
             commit(
-
                 'BANNERLIST', result.data,
-
             )
 
+        }
+    },
+    async getFloorList({commit}) {
+        let result = await reqFloorList();
+        console.log(result);
+        if (result.code === 200) {
+            commit(
+                'FLOORLIST', result.data,
+            )
         }
     }
 
@@ -45,10 +51,14 @@ const mutations = {
         state.categoryList = categoryList;
 
     },
-    BANNERLIST(state,bannerList){
-        console.log('在修改仓库中的数据');
-        state.bannerList=bannerList;
-    }
+    BANNERLIST(state, bannerList) {
+        state.bannerList = bannerList;
+    },
+    FLOORLIST(state,floorList)
+
+{
+    state.floorList = floorList;
+}
 
 }
 
