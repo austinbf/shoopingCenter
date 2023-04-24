@@ -10,7 +10,10 @@ Vue.config.productionTip = false
 import '@/mock/mockServe';
 import 'swiper/css/swiper.css'
 new Vue({
-  render: h => h(App),
+    beforeCreate() {
+        Vue.prototype.$bus=this;
+    },
+    render: h => h(App),
   //注册路由信息，当这里书写router的时候，
   //路由组件都具有了￥router，与￥route属性
   //
