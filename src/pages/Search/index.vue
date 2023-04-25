@@ -16,9 +16,10 @@
                         <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i
                                 @click="removeKeyWord()">x</i></li>
                         <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1] }}<i
-                            @click="removeTradeMark()">x</i></li>
-                        <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="index" >{{attrValue.split(':')[1]}}<i
-                            @click="removeAttrValue(index)">x</i></li>
+                                @click="removeTradeMark()">x</i></li>
+                        <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="index">
+                            {{ attrValue.split(':')[1] }}<i
+                                @click="removeAttrValue(index)">x</i></li>
                     </ul>
                 </div>
 
@@ -31,24 +32,23 @@
                     <div class="sui-navbar">
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
-                                <li class="active">
-                                    <a href="#">综合</a>
+
+                                <li @click="changeOrder('1')" :class="{'active':isOne()}">
+                                    <a>综合<span
+                                            v-show="isOne()"
+                                            class="iconfont"
+                                            :class="[isDesc()?'icon-arrowdown':'icon-arrowup']"
+                                    ></span></a>
                                 </li>
-                                <li>
-                                    <a href="#">销量</a>
+                                <li @click="changeOrder('2')" :class="{'active':isTwo()}">
+                                    <a>价格<span
+                                            v-show="isTwo()"
+                                            class="iconfont"
+                                            :class="[isDesc()?'icon-arrowdown':'icon-arrowup']"
+                                    ></span
+                                    ></a>
                                 </li>
-                                <li>
-                                    <a href="#">新品</a>
-                                </li>
-                                <li>
-                                    <a href="#">评价</a>
-                                </li>
-                                <li>
-                                    <a href="#">价格⬆</a>
-                                </li>
-                                <li>
-                                    <a href="#">价格⬇</a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ export default {
                 category3Id: "",
                 categoryName: "",
                 keyword: "",
-                order: "",
+                order: "1:desc",
                 pageNo: 1,
                 pageSize: '3',
                 props: [],
@@ -176,9 +176,39 @@ export default {
         SearchSelector
     },
     methods: {
-        removeTradeMark(){
-          this.searchParams.trademark=undefined;
-          this.getData();
+        removeTradeMark() {
+            this.searchParams.trademark = undefined;
+            this.getData();
+
+        },
+        isOne() {
+            return this.searchParams.order.includes('1');
+        },
+        isTwo() {
+            return this.searchParams.order.includes('2');
+        },
+        isDesc() {
+            return this.searchParams.order.includes('desc');
+        },
+        isAsc() {
+            return this.searchParams.order.includes('asc');
+        },
+        changeOrder(flag) {
+            let originOrder = this.searchParams.order;
+            let originFlag = this.searchParams.order.split(':')[0];
+            let originSort = this.searchParams.order.split(':')[1];
+            let newOrder = '';
+            if (originFlag == flag) {
+
+                newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+
+
+            } else {
+                newOrder = `${flag}:desc`;
+            }
+            this.searchParams.order = newOrder;
+            console.log(this.searchParams.order)
+            this.getData();
 
         },
         removeCategoryName() {
@@ -204,9 +234,9 @@ export default {
             this.getData();
             this.$bus.$emit('clear');
         },
-        removeAttrValue(index){
-       this.searchParams.props.splice(index,1);
-       this.getData();
+        removeAttrValue(index) {
+            this.searchParams.props.splice(index, 1);
+            this.getData();
 
         },
         getData() {
@@ -216,18 +246,18 @@ export default {
         },
         trademarkinfo(trademark) {
 
-            this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`;
+            this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
             this.getData();
         },
-      attrInfo(attr, attrValue) {
-          let newProps = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+        attrInfo(attr, attrValue) {
+            let newProps = `${attr.attrId}:${attrValue}:${attr.attrName}`;
 
-          if (this.searchParams.props.indexOf(newProps) === -1) {
-              this.searchParams.props.push(newProps);
-              //再次发请求，获取最新的数据展示即可
-              this.getData();
-          }
-      }
+            if (this.searchParams.props.indexOf(newProps) === -1) {
+                this.searchParams.props.push(newProps);
+                //再次发请求，获取最新的数据展示即可
+                this.getData();
+            }
+        }
     }
 }
 </script>
