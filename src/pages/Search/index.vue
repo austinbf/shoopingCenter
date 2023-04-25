@@ -83,6 +83,7 @@
 
                         </ul>
                     </div>
+                    <pagination/>
                     <div class="fr page">
                         <div class="sui-pagination clearfix">
                             <ul>

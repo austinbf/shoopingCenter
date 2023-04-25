@@ -5,7 +5,9 @@ import store from "@/store";//注意这里是小写，具体原因不知，但�
 import router from "@/router";
 //在这里注册全局组件，在之后的使用中就不用再次引入了
 import TypeNav from "@/components/TypeNav/index.vue";
+import Pagination from "@/components/Pagination/index.vue";
 Vue.component(TypeNav.name,TypeNav);
+Vue.component(Pagination.name,Pagination)
 Vue.config.productionTip = false
 import '@/mock/mockServe';
 import 'swiper/css/swiper.css'
