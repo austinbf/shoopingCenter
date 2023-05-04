@@ -37,7 +37,6 @@ const actions = {
     },
     async getFloorList({commit}) {
         let result = await reqFloorList();
-        console.log(result);
         if (result.code === 200) {
             commit(
                 'FLOORLIST', result.data,

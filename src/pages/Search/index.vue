@@ -7,7 +7,7 @@
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
                         <li>
-                            <a href="#">全部结果</a>
+                            <a >全部结果</a>
                         </li>
                     </ul>
                     <ul class="fl sui-tag">
@@ -58,7 +58,7 @@
                             <li class="yui3-u-1-5" v-for="(good,index) in goodsList" :key="good.id">
                                 <div class="list-wrap">
                                     <div class="p-img">
-                                        <a href="item.html" target="_blank"><img :src="good.defaultImg"/></a>
+                                        <router-link :to="`/detail/${good.id}`"> <img :src="good.defaultImg"/></router-link>
                                     </div>
                                     <div class="price">
                                         <strong>
@@ -128,8 +128,8 @@ export default {
                 categoryName: "",
                 keyword: "",
                 order: "1:desc",
-                pageNo: '1',
-                pageSize: '3',
+                pageNo: 1,
+                pageSize: '60',
                 props: [],
                 trademark: ""
             }

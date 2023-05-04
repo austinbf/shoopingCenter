@@ -21,3 +21,9 @@ export const reqGetSearchInfo=(params)=>requests({
     method:'post',
     data:params
 })
+///api/item/{ skuId }
+export const reqGoodsInfo=(skuId)=>requests({
+    url:`/item/${skuId}`,
+    method:'get'
+
+})

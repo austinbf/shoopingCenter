@@ -1,17 +1,26 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
+    <img :src="imageObj.imgUrl"/>
     <div class="event"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img :src="imageObj.imgUrl"/>
     </div>
     <div class="mask"></div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from "vuex";
+
   export default {
     name: "Zoom",
+      props:['skuImageList'],
+      computed:{
+        imageObj(){
+            return this.skuImageList[0]||{};
+        },
+          ...mapGetters(["skuInfo"]),
+      },
   }
 </script>
 

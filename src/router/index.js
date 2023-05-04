@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import VueRouter from "vue-router";
+
 Vue.use(VueRouter);
+import routes from "@/router/routes";
 import Home from "@/pages/Home"
 import Search from "@/pages/Search";
 import Login from "@/pages/Login"
 import Register from "@/pages/Register";
+import Detail from "@/pages/Detail/index.vue";
 
-let originPush=VueRouter.prototype.push;
-let originReplace=VueRouter.prototype.replace;
+let originPush = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function (location, resolve, reject) {
     if (resolve && reject) {
         originPush.call(this, location, resolve, reject)
@@ -15,8 +18,10 @@ VueRouter.prototype.push = function (location, resolve, reject) {
         originPush.call(
             this,
             location,
-            () => { },
-            () => { }
+            () => {
+            },
+            () => {
+            }
         )
     }
 }
@@ -28,43 +33,19 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
         originReplace.call(
             this,
             location,
-            () => { },
-            () => { }
+            () => {
+            },
+            () => {
+            }
         )
     }
 }
-export default  new VueRouter({
-    routes:[
-        {  path:'/home',
-            component:Home,
-            meta:{show:true}
-        },//注意这里是没有s的component
+export default new VueRouter({
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        // 始终滚动到顶部
+        return { y: 0 }
+    },
 
-
-        {
-            path:'/Search/:keyword?',
-            component:Search,
-            meta:{show:true},
-            name:'search'
-        }
-        ,
-        {
-            path:'/login',
-            component:Login,
-            meta:{show:false}
-        }
-        ,
-        {
-            path:'/register',
-            component:Register,
-            meta:{show:false}
-        }
-            ,{
-        path:"*",
-            redirect:"/home"
-
-        }
-
-    ]
 
 })
