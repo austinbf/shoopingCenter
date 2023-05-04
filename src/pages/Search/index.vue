@@ -52,6 +52,7 @@
                             </ul>
                         </div>
                     </div>
+
                     <div class="goods-list">
                         <ul class="yui3-g">
                             <li class="yui3-u-1-5" v-for="(good,index) in goodsList" :key="good.id">
@@ -78,45 +79,37 @@
                                            class="sui-btn btn-bordered btn-danger">加入购物车</a>
                                         <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                                     </div>
+
                                 </div>
                             </li>
 
                         </ul>
                     </div>
-                    <pagination/>
                     <div class="fr page">
-                        <div class="sui-pagination clearfix">
-                            <ul>
-                                <li class="prev disabled">
-                                    <a href="#">«上一页</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li class="dotted"><span>...</span></li>
-                                <li class="next">
-                                    <a href="#">下一页»</a>
-                                </li>
-                            </ul>
-                            <div><span>共10页&nbsp;</span></div>
-                        </div>
+                        <!--total：数据的总数
+                        pageSize：每一个界面的商品的总数
+                        pageNo是当前页面的页码
+                        continues是一共有几页
+                        -->
+                        <Pagination
+                                :total="total"
+                                :pageSize="searchParams.pageSize"
+                                :pageNo="searchParams.pageNo"
+                                :continues="5"
+                                @getPageNo="getPageNo"
+
+                        ></Pagination>
                     </div>
+
                 </div>
+
             </div>
+
+
         </div>
+
     </div>
+
 </template>
 
 <script>
@@ -135,7 +128,7 @@ export default {
                 categoryName: "",
                 keyword: "",
                 order: "1:desc",
-                pageNo: 1,
+                pageNo: '1',
                 pageSize: '3',
                 props: [],
                 trademark: ""
@@ -146,7 +139,13 @@ export default {
         ...mapGetters(
             ['goodsList',
                 'trademarkList',
-                'attrsList']
+                'attrsList',
+            ]
+        ),
+        ...mapState(
+            {
+                total: state => state.search.searchList.total
+            }
         )
     },
     beforeMount() {
@@ -258,6 +257,11 @@ export default {
                 //再次发请求，获取最新的数据展示即可
                 this.getData();
             }
+        },
+        //自定义事件
+        getPageNo(pageNo) {
+            this.searchParams.pageNo=pageNo;
+            this.getData();
         }
     }
 }
@@ -510,7 +514,7 @@ export default {
         width: 733px;
         height: 66px;
         overflow: hidden;
-        float: right;
+        margin: auto;
 
         .sui-pagination {
           margin: 18px 0;
@@ -589,6 +593,7 @@ export default {
             font-size: 14px;
             float: right;
             width: 241px;
+
           }
         }
       }
