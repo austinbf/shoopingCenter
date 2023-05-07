@@ -72,14 +72,12 @@
                                 <dt class="title">{{ saleAttr.saleAttrName }}</dt>
                                 <!--每一个销售属性的属性值的地方-->
                                 <dd
-                                        changepirce="0"
-                                        :class="{ active: saleAttrValue.isChecked == 1 }"
-                                        v-for="(
-                    saleAttrValue, index
-                  ) in saleAttr.spuSaleAttrValueList"
-                                        :key="saleAttrValue.id"
-                                        @click="
-                    changeChecked(saleAttrValue, saleAttr.spuSaleAttrValueList)
+                                    changepirce="0"
+                                    :class="{ active: saleAttrValue.isChecked == 1 }"
+                                    v-for="(saleAttrValue, index) in saleAttr.spuSaleAttrValueList"
+                                    :key="saleAttrValue.id"
+                                    @click="changeActive(saleAttrValue, saleAttr.spuSaleAttrValueList)
+
                   "
                                 >
                                     {{ saleAttrValue.saleAttrValueName }}
@@ -88,29 +86,22 @@
                         </div>
                         <div class="cartWrap">
                             <!-- 购物商品个数的操作地方 -->
+                        </div>
+                        <div class="cartWrap">
                             <div class="controls">
-                                <input
-                                        autocomplete="off"
-                                        class="itxt"
-                                        v-model="skuNum"
-                                        @change="handler"
-                                />
-                                <a href="javascript:" class="plus" @click="skuNum++">+</a>
-                                <a
-                                        href="javascript:"
-                                        class="mins"
-                                        @click="skuNum > 1 ? skuNum-- : 1"
-                                >-</a
-                                >
+                                <input autocomplete="off" class="itxt">
+                                <a href="javascript:" class="plus">+</a>
+                                <a href="javascript:" class="mins">-</a>
                             </div>
-                            <div class="add">
-                                <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
-                                <a @click="addOrUpdateCart">加入购物车</a>
-                            </div>
+                        </div>
+                        <div class="add">
+                            <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
+                            <a>加入购物车</a>
                         </div>
                     </div>
                 </div>
             </div>
+
         </section>
 
         <!-- 内容详情页 -->
@@ -353,6 +344,7 @@
             </div>
         </section>
     </div>
+
 </template>
 
 <script>
@@ -368,7 +360,17 @@ export default {
         Zoom
     },
     mounted() {
+
+
         this.$store.dispatch('getGoodInfo', this.$route.params.skuid)
+
+    },
+    methods:{
+      changeActive(saleAttrValue,arr){
+         arr.forEach(item=>item.isChecked='0');
+          saleAttrValue.isChecked='1';
+
+      }
     },
     computed: {
         ...
