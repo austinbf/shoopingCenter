@@ -72,11 +72,11 @@
                                 <dt class="title">{{ saleAttr.saleAttrName }}</dt>
                                 <!--每一个销售属性的属性值的地方-->
                                 <dd
-                                    changepirce="0"
-                                    :class="{ active: saleAttrValue.isChecked == 1 }"
-                                    v-for="(saleAttrValue, index) in saleAttr.spuSaleAttrValueList"
-                                    :key="saleAttrValue.id"
-                                    @click="changeActive(saleAttrValue, saleAttr.spuSaleAttrValueList)
+                                        changepirce="0"
+                                        :class="{ active: saleAttrValue.isChecked == 1 }"
+                                        v-for="(saleAttrValue, index) in saleAttr.spuSaleAttrValueList"
+                                        :key="saleAttrValue.id"
+                                        @click="changeActive(saleAttrValue, saleAttr.spuSaleAttrValueList)
 
                   "
                                 >
@@ -89,9 +89,9 @@
                         </div>
                         <div class="cartWrap">
                             <div class="controls">
-                                <input autocomplete="off" class="itxt">
-                                <a href="javascript:" class="plus">+</a>
-                                <a href="javascript:" class="mins">-</a>
+                                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum">
+                                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                                <a href="javascript:" class="mins" @click="skuNum>1?skuNum--:skuNum=1">-</a>
                             </div>
                         </div>
                         <div class="add">
@@ -354,7 +354,12 @@ import {mapGetters} from "vuex";
 
 export default {
     name: 'Detail',
-
+    data() {
+        //产品的个数
+        return {
+            skuNum: 0
+        }
+    },
     components: {
         ImageList,
         Zoom
@@ -365,12 +370,22 @@ export default {
         this.$store.dispatch('getGoodInfo', this.$route.params.skuid)
 
     },
-    methods:{
-      changeActive(saleAttrValue,arr){
-         arr.forEach(item=>item.isChecked='0');
-          saleAttrValue.isChecked='1';
+    methods: {
+        changeActive(saleAttrValue, arr) {
+            arr.forEach(item => item.isChecked = '0');
+            saleAttrValue.isChecked = '1';
 
-      }
+        },
+        changeSkuNum(e) {
+            let value = e.target.value * 1;
+            if (isNaN(value)||value<1) {
+                this.skuNum = 1;
+            }
+            else
+            {
+                this.skuNum=parseInt(value);
+            }
+        }
     },
     computed: {
         ...
