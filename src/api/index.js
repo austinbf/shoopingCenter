@@ -12,18 +12,27 @@ export const reqCategoryList = () => {
     //箭头函数可以在程序任意地方使用,箭头函数返回即为服务器的数据
     //下面箭头函数返回值：返回的是什么? promise,即为返回服务器的数据
     //return关键字，千万别忘记书写，如果忘记书写，你在任意地方获取的都是undeinfed
-    return requests({ method: 'get', url: '/product/getBaseCategoryList' });
+    return requests({method: 'get', url: '/product/getBaseCategoryList'});
 }
-export const reqBannerList=()=>mockRequests.get('/banner');
-export const reqFloorList=()=>mockRequests.get('/floor');
-export const reqGetSearchInfo=(params)=>requests({
-    url:'/list',
-    method:'post',
-    data:params
+export const reqBannerList = () => mockRequests.get('/banner');
+export const reqFloorList = () => mockRequests.get('/floor');
+export const reqGetSearchInfo = (params) => requests({
+    url: '/list',
+    method: 'post',
+    data: params
 })
 ///api/item/{ skuId }
-export const reqGoodsInfo=(skuId)=>requests({
-    url:`/item/${skuId}`,
-    method:'get'
+export const reqGoodsInfo = (skuId) => requests({
+    url: `/item/${skuId}`,
+    method: 'get'
 
+})
+///api/cart/addToCart/{ skuId }/{ skuNum }
+export const reqAddOrUpdateShopCart = (skuId, skuNum) => requests({
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
+    method: 'post'
+});
+///api/cart/cartList,获取购物车列表的接口
+export const reqCartList = () => requests({url: '/cart/cartList',
+   method:'get'
 })

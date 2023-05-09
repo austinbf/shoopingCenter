@@ -124,6 +124,7 @@ export default {
 
 <style scoped lang="less">
 .floor {
+
     margin-top: 15px;
 
     .py-container {
@@ -131,7 +132,9 @@ export default {
         margin: 0 auto;
 
         .title {
+
             .fl {
+
                 float: left;
                 color: #c81623;
                 font-size: 20px;
@@ -144,6 +147,7 @@ export default {
                 float: right;
 
                 .nav-tabs {
+
                     margin: 10px 0 0;
                     display: inline-block;
 

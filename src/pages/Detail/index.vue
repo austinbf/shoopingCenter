@@ -96,8 +96,9 @@
                         </div>
                         <div class="add">
                             <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
-                            <a>加入购物车</a>
+                            <a @click="addShopCate">加入购物车</a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -357,7 +358,7 @@ export default {
     data() {
         //产品的个数
         return {
-            skuNum: 0
+            skuNum: 1
         }
     },
     components: {
@@ -367,7 +368,7 @@ export default {
     mounted() {
 
 
-        this.$store.dispatch('getGoodInfo', this.$route.params.skuid)
+        this.$store.dispatch('getGoodInfo', this.$route.params.skuId)
 
     },
     methods: {
@@ -378,13 +379,28 @@ export default {
         },
         changeSkuNum(e) {
             let value = e.target.value * 1;
-            if (isNaN(value)||value<1) {
+            if (isNaN(value) || value < 1) {
                 this.skuNum = 1;
+            } else {
+                this.skuNum = parseInt(value);
             }
-            else
-            {
-                this.skuNum=parseInt(value);
+        },
+        async addShopCate() {
+
+            try {
+                await this.$store.dispatch('addOrUpdateShopCart',{
+                    skuId: this.$route.params.skuId,
+                    skuNum: this.skuNum
+                }
+            )
+                // this.$router.push({name:'addcartsuccess',query:{skuInfo:this.skuInfo,skuNum:this.skuNum }})
+            sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo));
+                this.$router.push({name:'addcartsuccess',query:{skuNum:this.skuNum}})
             }
+            catch (error){
+                alert(error.message)
+            }
+
         }
     },
     computed: {
@@ -534,6 +550,7 @@ export default {
 
         .choose {
           .chooseArea {
+            cursor: pointer;
             overflow: hidden;
             line-height: 28px;
             margin-top: 10px;
@@ -607,24 +624,35 @@ export default {
               }
             }
 
-            .add {
-              float: left;
 
-              a {
-                background-color: #e1251b;
-                padding: 0 25px;
-                font-size: 16px;
-                color: #fff;
-                height: 36px;
-                line-height: 36px;
-                display: block;
-              }
+          }
+
+          .add {
+            float: left;
+
+            :hover {
+
+              text-decoration: underline;
+
+
+            }
+
+            a {
+              cursor: pointer;
+              background-color: red;
+              padding: 0 25px;
+              font-size: 16px;
+              color: #fff;
+              height: 36px;
+              line-height: 36px;
+              display: block;
             }
           }
         }
       }
     }
   }
+
 
   .product-detail {
     width: 1200px;
