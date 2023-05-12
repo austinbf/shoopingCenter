@@ -13,7 +13,8 @@
             <div class="cart-body">
                 <ul class="cart-list" v-for="(cart,index) in cartInfoList" :key="cart.id">
                     <li class="cart-list-con1">
-                        <input type="checkbox" name="chk_list" :checked="cart.isChecked">
+                        <input type="checkbox" @change="updateChecked(cart,$event)" name="chk_list"
+                               :checked="cart.isChecked">
                     </li>
                     <li class="cart-list-con2">
                         <img :src="cart.imgUrl">
@@ -33,7 +34,7 @@
                         <span class="sum">{{ cart.skuPrice * cart.skuNum }}</span>
                     </li>
                     <li class="cart-list-con7">
-                        <a href="#none" class="sindelet">删除</a>
+                        <a class="sindelet" @click="deleteCartById(cart)">删除</a>
                         <br>
                         <a href="#none">移到收藏</a>
                     </li>
@@ -44,11 +45,11 @@
         </div>
         <div class="cart-tool">
             <div class="select-all">
-                <input class="chooseAll" type="checkbox" :checked="isAllChecked">
+                <input class="chooseAll" type="checkbox" :checked="isAllChecked" @change="updateAllCartChecked">
                 <span>全选</span>
             </div>
             <div class="option">
-                <a href="#none">删除选中的商品</a>
+                <a @click="deleteAllCheckedCart">删除选中的商品</a>
                 <a href="#none">移到我的关注</a>
                 <a href="#none">清除下柜商品</a>
             </div>
@@ -61,7 +62,9 @@
                     <i class="summoney"></i>
                 </div>
                 <div class="sumbtn">
-                    <a class="sum-btn" href="###" target="_blank">结算</a>
+                    <div class="sumbtn">
+                        <a class="sum-btn" href="###" target="_blank">结算</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,6 +73,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {debounce, throttle} from "lodash";
 
 export default {
     name: 'ShopCart',
@@ -107,7 +111,7 @@ export default {
         getData() {
             this.$store.dispatch('getCartList');
         },
-        async handler(type, disNum, cart) {
+        handler: debounce(async function (type, disNum, cart) {
             switch (type) {
                 case 'add':
                     disNum = 1;
@@ -121,7 +125,7 @@ export default {
                     break
                 case 'change':
 
-                  disNum=(isNaN(disNum)||disNum<1)?0:parseInt(disNum)-cart.skuNum;
+                    disNum = (isNaN(disNum) || disNum < 1) ? 0 : parseInt(disNum) - cart.skuNum;
                     break;
             }
 
@@ -129,8 +133,51 @@ export default {
                 await this.$store.dispatch('addOrUpdateShopCart', {skuId: cart.skuId, skuNum: disNum})
                 this.getData();
             } catch (error) {
+                alert(error.message);
             }
+        }, 500),
+        updateChecked(cart, event) {
+            try {
+
+                let isChecked = event.target.checked ? '1' : '0';
+                this.$store.dispatch('updateCheckedById', {skuId: cart.skuId, isChecked})
+                this.getData();
+            } catch (error) {
+                alert(error.message);
+            }
+
+
+        },
+
+        async deleteCartById(cart) {
+            try {
+                await this.$store.dispatch('deleteCartById', cart.skuId)
+            } catch (error) {
+                alert(error.message);
+            }
+        },
+        deleteAllCheckedCart() {
+//派发一个action
+            try {
+                this.$store.dispatch('deleteAllCheckedCart');
+                this.getData();
+            } catch (error) {
+                alert(error.message)
+            }
+
+        },
+        updateAllCartChecked(){
+            try{
+                let isChecked=event.target.checked?'1':'0';
+                this.$store.dispatch('updateAllIsChecked',isChecked)
+                this.getData()
+            }
+            catch (error){
+                alert(error.message);
+            }
+
         }
+
     }
 }
 </script>
