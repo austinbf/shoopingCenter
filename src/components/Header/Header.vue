@@ -7,11 +7,18 @@
                 <div class="container">
                     <div class="loginList">
                         <p>尚品汇欢迎您！</p>
-                        <p>
+                        <p v-if="!userName">
                             <span>请</span>
+
                             <router-link to="/login">登录</router-link>
                             <router-link class="register" to="/register">免费注册</router-link>
                         </p>
+                        <!--登录状态-->
+                        <p v-if="userName">
+                            <a>{{ userName }}</a>
+                            <a class="register">退出</a>
+                        </p>
+
                     </div>
                     <div class="typeList">
                         <a href="###">我的订单</a>
@@ -43,6 +50,9 @@
     </div>
 </template>
 <script>
+
+import {mapGetters} from "vuex";
+
 export default {
     name: 'Header',
     data() {
@@ -51,9 +61,12 @@ export default {
         }
     },
     mounted() {
-       this.$bus.$on('clear',()=>{
-           this.keyword='';
-       })
+        this.$bus.$on('clear', () => {
+            this.keyword = '';
+        })
+    },
+    computed: {
+        ...mapGetters(['userName'])
     },
     methods: {
         // 搜索按钮的回调函数： 需要向search路由跳转
@@ -93,24 +106,24 @@ export default {
             //   query: { k: this.keyword.toUpperCase() }
             // })
             //
-                    let locations = {
-                        name: "search",
-                        params: {keyword: this.keyword || undefined},
-                    };
-                    //确定路径当中有query参数
-                    if (this.$route.query.categoryName) {
-                        locations.query = this.$route.query;
-                    }
+            let locations = {
+                name: "search",
+                params: {keyword: this.keyword || undefined},
+            };
+            //确定路径当中有query参数
+            if (this.$route.query.categoryName) {
+                locations.query = this.$route.query;
+            }
 
-                    this.$router.push(locations);
-                },
-            //     // 退出登录的按钮的回调
-            //     logout() {
-            //         //派遣action退出登录
-            //         this.$store.dispatch('logout');
-            //     }
-            // },
+            this.$router.push(locations);
         },
+        //     // 退出登录的按钮的回调
+        //     logout() {
+        //         //派遣action退出登录
+        //         this.$store.dispatch('logout');
+        //     }
+        // },
+    },
 
 }
 </script>

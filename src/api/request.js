@@ -15,16 +15,20 @@ const requests = axios.create({
 //请求拦截器，在发请求之前，请求拦截器可以检测到，可以在请求发出去之前做一些事情
 requests.interceptors.request.use((config) => {
     nprogress.start();
-if(store.state.detail.uuid_token){
-    config.headers.userTempId=store.state.detail.uuid_token;
-}
+    if (store.state.detail.uuid_token) {
+        config.headers.userTempId = store.state.detail.uuid_token;
+    }
+
+    if (store.state.user.token) {
+        config.headers.token = store.state.user.token;
+    }
     return config;
 
 })
 //响应拦截器
 requests.interceptors.response.use((res) => {
         //成功的响应拦截器
-    nprogress.done();
+        nprogress.done();
         return res.data;
     },
 
