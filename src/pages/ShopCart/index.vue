@@ -63,7 +63,7 @@
                 </div>
                 <div class="sumbtn">
                     <div class="sumbtn">
-                        <a class="sum-btn" href="###" target="_blank">结算</a>
+                        <a class="sum-btn" target="_blank" @click="$router.push('/trade')">结算</a>
                     </div>
                 </div>
             </div>
@@ -166,13 +166,12 @@ export default {
             }
 
         },
-        updateAllCartChecked(){
-            try{
-                let isChecked=event.target.checked?'1':'0';
-                this.$store.dispatch('updateAllIsChecked',isChecked)
+        updateAllCartChecked() {
+            try {
+                let isChecked = event.target.checked ? '1' : '0';
+                this.$store.dispatch('updateAllIsChecked', isChecked)
                 this.getData()
-            }
-            catch (error){
+            } catch (error) {
                 alert(error.message);
             }
 
@@ -379,6 +378,7 @@ export default {
 
       .sumbtn {
         float: right;
+        cursor: pointer;
 
         a {
           display: block;

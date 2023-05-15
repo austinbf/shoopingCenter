@@ -61,3 +61,4 @@ export const reqLogOut=()=>requests({
     method:'get'
 })
 export const reqUserInfo = ()=>requests({url:`/user/passport/auth/getUserInfo`,method:'get'});
+export const reqAddressInfo=()=>requests({url:'/user/userAddress/auth/findUserAddressList',method:'get'})
