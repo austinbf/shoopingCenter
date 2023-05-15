@@ -1,11 +1,16 @@
 import {reqAddressInfo} from "@/api";
+import {reqOrder} from "@/api";
 
 const state={
-    address:[]
+    address:[],
+    orderInfo:{}
 };
 const mutations={
     GETUSERADDRESS(state,address){
         state.address=address
+    },
+    GETORDERINFO(state,orderInfo){
+        state.orderInfo=orderInfo;
     }
 };
 const actions={
@@ -13,11 +18,18 @@ const actions={
     async getUserAddress({commit}){
         let result=await reqAddressInfo()
         if(result.code==200){
-            console.log(result)
             commit('GETUSERADDRESS',result.data)
         }
 
+    },
+    //获取商品清单数据
+    async getOrderInfo({commit}){
+        let result=await reqOrder();
+        if(result.code==200){
+            commit('GETORDERINFO',result.data)
+        }
     }
+
 };
 const getters={};
 export default {
