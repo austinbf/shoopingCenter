@@ -56,7 +56,7 @@ export const reqUserLogIn=(data)=>requests({
     data,
     method:'post'
 })
-export const reqUserLogOut=()=>requests({
+export const reqLogOut=()=>requests({
     url:'/user/passport/logout',
     method:'get'
 })

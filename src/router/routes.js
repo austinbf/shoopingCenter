@@ -5,12 +5,18 @@ import Login from "@/pages/Login/index.vue";
 import Register from "@/pages/Register/index.vue";
 import AddCartSuccess from "@/pages/AddCartSuccess/index.vue";
 import ShopCart from "@/pages/ShopCart/index.vue";
+import Trade from "@/pages/Trade/index.vue";
 export default [
     {
         path: '/home',
         component: Home,
         meta: {show: true}
     },//注意这里是没有s的component
+    {
+        path: '/trade',
+        component: Trade,
+        meta: {show: true}
+    },
     {
         path: '/shopcart',
         component: ShopCart,

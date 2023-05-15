@@ -1,11 +1,15 @@
-import {reqGetCode} from "@/api";
+import {reqGetCode, reqLogOut} from "@/api";
 import {reqUserRegister} from "@/api";
 import {reqUserLogIn} from "@/api";
 import {reqUserInfo} from "@/api";
+import {setToken} from "@/utils/token";
+import {removeToken} from "@/utils/token";
+import {isES5Constructor} from "eslint/lib/rules/utils/ast-utils";
+
 
 const state = {
     code: '',
-    token: '',
+    token: localStorage.getItem('TOKEN'),
     userInfo: ''
 };
 const mutations = {
@@ -18,6 +22,11 @@ const mutations = {
     },
     GETUSERINFO(state, userInfo) {
         state.userInfo = userInfo;
+    },
+    CLEAR(state) {
+        state.userInfo = {};
+        state.token = '';
+        removeToken();
     }
 };
 const actions = {
@@ -37,7 +46,7 @@ const actions = {
         if (result.code == 200) {
             return 'ok'
         } else {
-            return Promise.reject(Error('fail'))
+            return Promise.reject(Error('fail'));
         }
 
 
@@ -46,6 +55,8 @@ const actions = {
         let result = await reqUserLogIn(data)
         if (result.code == 200) {
             commit('USERLOGIN', result.data.token);
+            //持久化存储
+            setToken(result.data.token);
             return 'ok'
         } else {
             return Promise.reject(Error('fail'))
@@ -57,6 +68,19 @@ const actions = {
         let result = await reqUserInfo();
 
         commit('GETUSERINFO', result.data);
+        return 'ok';
+
+
+    },
+    async userLogOut({commit}) {
+        let result = await reqLogOut();
+        //actions里面不能操作state
+        if (result.code == 200) {
+            commit('CLEAR');
+            return 'ok'
+        } else {
+            return Promise.reject(Error('fail'))
+        }
 
     }
 };

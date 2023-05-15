@@ -16,7 +16,7 @@
                         <!--登录状态-->
                         <p v-if="userName">
                             <a>{{ userName }}</a>
-                            <a class="register">退出</a>
+                            <a class="register" @click="logOut">退出</a>
                         </p>
 
                     </div>
@@ -64,10 +64,13 @@ export default {
         this.$bus.$on('clear', () => {
             this.keyword = '';
         })
+
+
     },
     computed: {
         ...mapGetters(['userName'])
     },
+
     methods: {
         // 搜索按钮的回调函数： 需要向search路由跳转
         goSearch() {
@@ -123,6 +126,17 @@ export default {
         //         this.$store.dispatch('logout');
         //     }
         // },
+        async logOut() {
+            try{
+                await this.$store.dispatch('userLogOut');
+               this.$router.push('/home');
+            }
+            catch (error){
+                console.log(error.message);
+            }
+
+
+        }
     },
 
 }
@@ -149,6 +163,7 @@ export default {
           margin-right: 10px;
 
           .register {
+            cursor: pointer;
             border-left: 1px solid #b3aeae;
             padding: 0 5px;
             margin-left: 5px;

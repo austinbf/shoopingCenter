@@ -30,7 +30,7 @@
                                 </label>
                                 <span class="forget">忘记密码？</span>
                             </div>
-                            <button class="btn" @click="userLogIn" >登&nbsp;&nbsp;录</button>
+                            <button class="btn" @click="userLogIn" type="button" >登&nbsp;&nbsp;录</button>
                         </form>
 
                         <div class="call clearFix">

@@ -26,7 +26,9 @@ export default {
 
   },
   mounted() {
+      //想要在所有界面的时候派发一个请求的时候就就在这派发
       this.$store.dispatch('categoryList');
+
   }
 }
 </script>
