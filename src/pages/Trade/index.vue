@@ -107,7 +107,7 @@ export default {
     computed: {
         ...mapState({
             addressInfo: state => state.trade.address,
-            orderInfo: state => state.trade.orderInfo
+            orderInfo: state => state.trade.orderInfo,
         }),
         //将来提交订单最终选中的地址
         userDefaultAddress() {
@@ -138,9 +138,12 @@ export default {
             try {
 
                 let result=await this.$API.reqSubmitOrder(tradeNo, data);
-                console.log(result)
+                if(result.code==200){
+                    this.orderId=result.data;
+                    this.$router.push('/pay?orderId='+this.orderId);
+                }
                 //将来提交订单成功【订单ID生成】，路由跳转pay页面，进行支付
-                this.$router.push({path: '/pay', query: {orderId: this.orderId}});
+
 
             } catch (error) {
                 alert(error.message);
