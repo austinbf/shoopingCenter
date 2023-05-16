@@ -63,3 +63,5 @@ export const reqLogOut=()=>requests({
 export const reqUserInfo = ()=>requests({url:`/user/passport/auth/getUserInfo`,method:'get'});
 export const reqAddressInfo=()=>requests({url:'/user/userAddress/auth/findUserAddressList',method:'get'})
 export const reqOrder=()=>requests({url:'/order/auth/trade',method:'get'})
+///api/order/auth/submitOrder?tradeNo={tradeNo}
+export const reqSubmitOrder=(tradeNo,data)=>requests({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data,method:'post'})

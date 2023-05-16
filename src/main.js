@@ -11,8 +11,12 @@ Vue.component(Pagination.name,Pagination)
 Vue.config.productionTip = false
 import '@/mock/mockServe';
 import 'swiper/css/swiper.css'
+//统一接入api文件夹中的全部请求函数
+import * as API from '@/api';
+console.log(API);
 new Vue({
     beforeCreate() {
+        Vue.prototype.$API=API;
         Vue.prototype.$bus=this;
     },
     render: h => h(App),

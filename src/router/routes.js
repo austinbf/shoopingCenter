@@ -6,12 +6,18 @@ import Register from "@/pages/Register/index.vue";
 import AddCartSuccess from "@/pages/AddCartSuccess/index.vue";
 import ShopCart from "@/pages/ShopCart/index.vue";
 import Trade from "@/pages/Trade/index.vue";
+import Pay from "@/pages/Pay/index.vue";
 export default [
     {
         path: '/home',
         component: Home,
         meta: {show: true}
     },//注意这里是没有s的component
+    {
+        path: '/pay',
+        component: Pay,
+        meta: {show: true}
+    },
     {
         path: '/trade',
         component: Trade,
