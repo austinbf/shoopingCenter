@@ -76,8 +76,10 @@ const actions = {
         let result = await reqLogOut();
         //actions里面不能操作state
         if (result.code == 200) {
+            console.log(123321)
             commit('CLEAR');
             return 'ok'
+
         } else {
             return Promise.reject(Error('fail'))
         }

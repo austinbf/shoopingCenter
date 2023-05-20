@@ -67,8 +67,8 @@ router.beforeEach(async (to, from, next) => {
     //用户登录
     if (hasToken) {
         //用户登录了,不能去login
-        if (to.path == "/login") {
-            next('/home');
+        if (to.path .includes("/login")) {
+            next();
         } else {
             //用户登陆了,而且还有用户信息【去的并非是login】
             if (hasNickName) {
@@ -83,7 +83,7 @@ router.beforeEach(async (to, from, next) => {
                     //用户没有信息，还携带token发请求获取用户信息【失败】
                     //token【学生证失效了】
                     //token失效:本地清空数据、服务器的token通知服务器清除
-                    await store.dispatch('logout');
+                    await store.dispatch('userLogOut');
                     //回到登录页，重新获取一个新的学生证
                     next('/login');
                 }

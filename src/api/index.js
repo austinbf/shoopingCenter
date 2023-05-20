@@ -2,6 +2,7 @@
 import requests from "@/api/request";
 import mockRequests from "@/api/mockAjsx";
 import {post} from "axios";
+import {exp} from "qrcode/lib/core/galois-field";
 //三级联动的接口
 //http://gmall-h5-api.atguigu.cn/api/product/getBaseCategoryList
 //get 无参数
@@ -65,3 +66,7 @@ export const reqAddressInfo=()=>requests({url:'/user/userAddress/auth/findUserAd
 export const reqOrder=()=>requests({url:'/order/auth/trade',method:'get'})
 ///api/order/auth/submitOrder?tradeNo={tradeNo}
 export const reqSubmitOrder=(tradeNo,data)=>requests({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data,method:'post'})
+//获取支付信息
+export const reqPayInfo=(orderId)=>requests({url:`/payment/weixin/createNative/${orderId}`,method:'get'})
+export  const reqPayState=(orderId)=>requests({url:`/payment/weixin/queryPayStatus/${orderId}`,method:'get'})
+export const reqMyOrderList=(page,limit)=>requests({url:`/order/auth/${page}/${limit}`,method:'get'})

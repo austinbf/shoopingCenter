@@ -7,13 +7,17 @@ import router from "@/router";
 import TypeNav from "@/components/TypeNav/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
 Vue.component(TypeNav.name,TypeNav);
-Vue.component(Pagination.name,Pagination)
+Vue.component(Pagination.name,Pagination);
+import { MessageBox } from 'element-ui';
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 Vue.config.productionTip = false
 import '@/mock/mockServe';
 import 'swiper/css/swiper.css'
 //统一接入api文件夹中的全部请求函数
 import * as API from '@/api';
-console.log(API);
+
+
 new Vue({
     beforeCreate() {
         Vue.prototype.$API=API;
