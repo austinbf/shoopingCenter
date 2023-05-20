@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
+import lazyload from 'vue-lazy-load'
 import store from "@/store";//注意这里是小写，具体原因不知，但是要注意
 //引入路由
 import router from "@/router";
 //在这里注册全局组件，在之后的使用中就不用再次引入了
 import TypeNav from "@/components/TypeNav/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
+import loadingImage from '@/assets/logo.png'
 Vue.component(TypeNav.name,TypeNav);
 Vue.component(Pagination.name,Pagination);
 import { MessageBox } from 'element-ui';
@@ -16,8 +18,11 @@ import '@/mock/mockServe';
 import 'swiper/css/swiper.css'
 //统一接入api文件夹中的全部请求函数
 import * as API from '@/api';
-
-
+Vue.use(lazyload,{
+    loading: loadingImage
+})
+//引入校验插件
+import '@/myPlugins/validate';
 new Vue({
     beforeCreate() {
         Vue.prototype.$API=API;

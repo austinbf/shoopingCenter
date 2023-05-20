@@ -64,11 +64,11 @@ router.beforeEach(async (to, from, next) => {
     let hasToken = store.state.user.token;
     //用户信息
     let hasNickName = store.state.user.nickName;
-    //用户登录
+    //用户登录,全局守卫
     if (hasToken) {
         //用户登录了,不能去login
         if (to.path .includes("/login")) {
-            next();
+            next('/home');
         } else {
             //用户登陆了,而且还有用户信息【去的并非是login】
             if (hasNickName) {

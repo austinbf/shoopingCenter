@@ -11,79 +11,112 @@ import PaySuccess from "@/pages/PaySuccess/index.vue";
 import Center from "@/pages/Center/index.vue";
 import MyOrder from '@/pages/Center/myOrder'
 import GroupOrder from '@/pages/Center/groupOrder'
-
 export default [
     {
         path: '/home',
-        component: Home,
+        component: ()=>import('@/pages/Home'),
         meta: {show: true}
     },//注意这里是没有s的component
     {
         path: '/center',
-        component: Center,
+        component: ()=>import('@/pages/Center'),
         meta: {show: true},
         children: [{
             path: 'myorder',
-            component: MyOrder
+            component: ()=>import('@/pages/Center/myOrder')
         }, {
             path: 'grouporder',
-            component: GroupOrder
+            component: ()=>import('@/pages/Center/groupOrder')
         },
             {
-                path:'/center',
-                redirect:'/center/myorder'
+                path: '/center',
+                redirect: '/center/myorder'
             }
         ]
     },
     {
         path: '/paysuccess',
-        component: PaySuccess,
+        component: ()=>import('@/pages/PaySuccess'),
+        beforeEnter: (to, from, next) => {
+            // reject the navigation
+            if (from.path == '/pay') {
+                next();
+                return true;
+            } else {
+                next(false)
+                return false;
+            }
+
+        },
         meta: {show: true}
     },
     {
         path: '/pay',
-        component: Pay,
+        component: ()=>import('@/pages/Pay'),
+        beforeEnter: (to, from, next) => {
+            // reject the navigation
+            if (from.path == '/trade') {
+                next();
+                return true;
+            } else {
+                next(false)
+                return false;
+            }
+
+        },
         meta: {show: true}
     },
-    {
+    {//路由独享守卫
+
         path: '/trade',
-        component: Trade,
+        component: ()=>import('@/pages/Trade'),
+        beforeEnter: (to, from, next) => {
+            // reject the navigation
+            if (from.path == '/shopcart') {
+                next();
+                return true;
+            } else {
+                next(false)
+                return false;
+            }
+
+        },
         meta: {show: true}
     },
     {
         path: '/shopcart',
-        component: ShopCart,
+        component: ()=>import('@/pages/ShopCart'),
         meta: {show: true},
         name: 'ShopCart'
     },
     {
         path: '/addcartsuccess',
-        component: AddCartSuccess,
+        component: ()=>import('@/pages/AddCartSuccess'),
         meta: {show: true},
         name: 'addcartsuccess'
     },
     {
         path: '/detail/:skuId',
-        component: Detail,
+        component: ()=>import('@/pages/Detail'),
         meta: {show: true}
     },
 
     {
         path: '/Search/:keyword?',
-        component: Search,
+        component: ()=>import('@/pages/Search'),
         meta: {show: true},
         name: 'search'
     }
     ,
     {
         path: '/login',
-        component: Login,
+        component: ()=>import('@/pages/Login'),
         meta: {show: false}
     }
     ,
     {
         path: '/register',
-        component: Register,
+        component: ()=>import('@/pages/Register'),
         meta: {show: false}
     }
     , {
